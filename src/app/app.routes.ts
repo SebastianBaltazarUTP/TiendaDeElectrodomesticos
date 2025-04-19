@@ -1,22 +1,21 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { HomeComponent } from './components/home/home.component';
-import { ProductCatalogComponent } from './components/product-catalog/product-catalog.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+// src/app/app.routes.ts
+import { Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
-const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'catalog', component: ProductCatalogComponent },
-  { path: 'product/:id', component: ProductDetailComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+export const routes: Routes = [
+  { 
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES)
+  },
+  { 
+    path: 'products',
+    loadChildren: () => import('./features/products/products.routes').then(m => m.PRODUCT_ROUTES),
+    canActivate: [AuthGuard]
+  },
+  { 
+    path: 'home',
+    loadChildren: () => import('./features/home/home.routes').then(m => m.HOME_ROUTES)
+  },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home' }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

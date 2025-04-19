@@ -1,0 +1,22 @@
+<p>home works!</p>
+<section class="hero">
+    <h1>Bienvenido a nuestra tienda</h1>
+    <p>Descubre nuestros productos destacados</p>
+  </section>
+  
+  <div class="featured-products">
+    <h2>Productos Destacados</h2>
+    <div class="products-grid">
+      <mat-card *ngFor="let product of featuredProducts" class="product-card">
+        <mat-card-header>
+          <mat-card-title>{{ product.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Precio: ${{ product.price }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button [routerLink]="['/products', product.id]">Ver Detalle</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
