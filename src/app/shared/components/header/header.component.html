@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+    <span routerLink="/home">Mi Tienda</span>
+    
+    <div class="spacer"></div>
+  
+    <nav>
+      <a mat-button routerLink="/home" routerLinkActive="active">Home</a>
+      <a mat-button routerLink="/products" routerLinkActive="active">Productos</a>
+      
+      <ng-container *ngIf="(currentUser$ | async) as user; else loginSection">
+        <button mat-button [matMenuTriggerFor]="userMenu">
+          {{ user.username }}
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item (click)="logout()">Cerrar sesión</button>
+        </mat-menu>
+      </ng-container>
+  
+      <ng-template #loginSection>
+        <a mat-button routerLink="/auth/login" routerLinkActive="active">Login</a>
+        <a mat-button routerLink="/auth/register" routerLinkActive="active">Registro</a>
+      </ng-template>
+    </nav>
+  </mat-toolbar>
